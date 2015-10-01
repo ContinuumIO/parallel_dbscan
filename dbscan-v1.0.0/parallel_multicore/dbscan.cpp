@@ -160,8 +160,6 @@ namespace NWUClustering
 
         // get the neighbor of the first point and print them
 
-        //cout << "DBSCAN ALGORITHMS============================" << endl;
-
         kdtree2_result_vector ne;
 
         // assign parent to itestf
@@ -187,7 +185,7 @@ namespace NWUClustering
 
         vector<int>* ind = dbs.m_kdtree->getIndex();
 
-        double start = omp_get_wtime();
+        // double start = omp_get_wtime();
 #pragma omp parallel \
     private(root, root1, root2, tid, ne, npid, i, j, pid)   \
     shared(sch, ind) //, prID)
@@ -287,9 +285,9 @@ namespace NWUClustering
 
         int v1, v2, size;
         // merge the trees that have not been merged yet
-        double stop = omp_get_wtime() ;
-        cout << "Local computation took " << stop - start
-             << " seconds." << endl;
+        //double stop = omp_get_wtime() ;
+        //cout << "Local computation took " << stop - start
+        //     << " seconds." << endl;
 
         //allocate and initiate locks
         omp_lock_t *nlocks;
@@ -297,7 +295,7 @@ namespace NWUClustering
                                        sizeof(omp_lock_t));
 
         //start = stop;
-        start = omp_get_wtime();
+        //start = omp_get_wtime();
 
 #pragma omp parallel for \
     private(i) \
@@ -398,9 +396,9 @@ namespace NWUClustering
             }
         }
 
-        stop = omp_get_wtime();
+        //stop = omp_get_wtime();
         free(nlocks);
-        cout << "Merging took " << stop - start << " seconds."<< endl;
+        //cout << "Merging took " << stop - start << " seconds."<< endl;
 
         for(tid = 0; tid < maxthreads; tid++)
             merge[tid].clear();
